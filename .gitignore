@@ -1,0 +1,9 @@
+# Cache Files
+*cache*
+migrations
+
+# Database Files
+db.*
+
+# Hardhat Files
+artifacts
