@@ -30,9 +30,11 @@ INSTALLED_APPS = [
 
     # Custom Apps
     "app",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -41,6 +43,18 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    f"http://{gethostbyname(gethostname())}:8000",
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://172.20.0.1:3000",
+    "http://192.168.137.161:3000",
+]
+CORS_ORIGIN_WHITELIST = CSRF_TRUSTED_ORIGINS
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = "auth.urls"
 
@@ -120,3 +134,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     # "/var/www/static/",
 ]
+
+PRIVATE_KEY = env("PRIVATE_KEY")
