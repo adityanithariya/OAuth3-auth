@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Continue with Oauth</title>
+</head>
+
+<style>
+    body {
+        background: url("{% static 'bg.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+    }
+
+    .container {
+        width: 50%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .userTab {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.251);
+        padding: 10px;
+        border-radius: 5px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-bottom: 10px;
+    }
+
+    .data {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: 20px;
+
+    }
+
+    #myForm{
+        width: 60%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .buttonHolder{
+        width: 60%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <span style="color:lightgray">Requested Scoped</span>
+        <h3>Select What You Want to Share !</h3>
+        </br>
+        <form method="POST"  id="myForm" action="{% url 'selectScope' %}">
+            {% csrf_token %}
+            <input type="hidden" name="allowed_scopes" id="scope" />
+            <input type="hidden" name="session_id" value="{{ session_id }}"/>
+        </form action="{% static 'selectScope' %}">
+            <div class="userTab" >
+                <input class="form-check-input" type="checkbox" value="0" id="name" checked>
+                <div class="data">
+                    <span>Full Name</span>
+                    <span style="color:lightgray;font-size: 0.8rem;">Official Name on Adhaar</span>
+                </div>
+            </div>
+
+            <div class="userTab" >
+                <input class="form-check-input" type="checkbox" value="1" id="adNum" checked>
+                <div class="data">
+                    <span>Adhaar Number</span>
+                    <span style="color:lightgray;font-size: 0.8rem;">Official Adhaar No. </span>
+                </div>
+            </div>
+
+            <div class="userTab" >
+                <input class="form-check-input" type="checkbox" value="2" id="adDob" checked>
+                <div class="data">
+                    <span>Date Of Birth</span>
+                    <span style="color:lightgray;font-size: 0.8rem;">Official DOB on Adhaar</span>
+                </div>
+            </div>
+    
+            <div class="userTab" >
+                <input class="form-check-input" type="checkbox" value="3" id="adAdd" checked>
+                <div class="data">
+                    <span>Address</span>
+                    <span style="color:lightgray;font-size: 0.8rem;">Official Address on Adhaar</span>
+                </div>
+            </div>
+        <div class="buttonHolder" >
+            <button type="button" onclick="submit()"  class="btn btn-light mt-3" >Allow</button>
+            <button type="button" onclick="deny()" class="btn btn-danger mt-3" >Deny</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    function deny(){
+        location.href = "https://suyash.com"
+    }
+
+    function submit(){
+        let checkboxes = document.getElementsByClassName("form-check-input")
+        let scope = "AC"
+        for (key in checkboxes) {
+            console.log(checkboxes[key]);
+            if (checkboxes[key].checked)
+            scope += `${checkboxes[key].value}`;
+        }
+        console.log(scope)
+        document.getElementById("scope").value = scope;
+        document.getElementById("myForm").submit();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+
+</html>
